@@ -1,0 +1,33 @@
+output
+	&'|x| {"d"}' @oa
+	&getCode
+	bitsToPackets
+	spawnBytestream 'false'
+	differentiator
+	&'|x|{bitv::from_bytes(x.as_slice())}'
+	{'|x,y|{x.map(|a| a.iter().map(|b| y.send(b as uint)).last()).last();()}'
+	&'|x|{x as f32}'
+	(/+ @ob @oc)
+	^ (Z) (&'|x| -> bool { return x > 500f32 }')
+	(^ (@xb) (* -5e-4)) differentiator
+	(@0) (@xc) (@xa)#
+
+main
+	rtlSourceCmplx (4339e5, 402, 256e3)
+	^ (,&'|x|{x.norm()}')
+	trigger
+	discretize
+	rle
+	dle 256e3
+	^ ({'|mut a,b| {a.map(|x| {b.send(match x { (1, 2e-4..6e-4) => match a.next().unwrap() { (0, 1.5e-3..2.5e-3) => Some(0u), (0, 3.5e-3..4.5e-3) => Some(1u), _ => None}, _     => None})}).last();()}') ({'|mut a,b| {a.map(|x| {b.send(match x {(1, ref d@125e-6..250e-6) | (1, ref d @500e-6..650e-6) => {match a.next().unwrap() {(0, ref e @500e-6..650e-6) | (0, ref e@125e-6..250e-6) => Some(if d > e {1u} else {0u}),_ => None}}, _ => None})}).last();()}')
+	?$36 ?$24
+	(^ B[4,8,4,12,8] B[4,8,2,10,12]) !'|mut x|{x.push(0); x}'
+	(&'|x| {if *x.get(0) == 5 {Some(x)} else {None}}') (&'|x| {if *x.get(0) != 5 {Some(x)} else {None}}') (@xc)
+	?{ ?{
+	,&'|&x| {x as f32}' (,&'|&x| {x as f32}')
+	,* 'vec!(1., 1., 1., 1e-1, 1.)' ,* 'vec!(1., 1., 1., 1e-1, 1e-1)' ,&'|&x| {x as f32}' @oc
+	%
+	differentiator
+	&'|x| {(time::get_time().sec, x)}'
+	printSink
+
